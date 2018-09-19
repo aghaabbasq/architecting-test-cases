@@ -12,10 +12,6 @@
 // the project's config changing)
 
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, args) => {
-    if (browser.name === 'chrome') {
-      args.push('--disable-blink-features=RootLayerScrolling')
-      return args
-    }
-  })
+  // `on` is used to hook into various events Cypress emits
+  // `config` is the resolved Cypress config
 }
