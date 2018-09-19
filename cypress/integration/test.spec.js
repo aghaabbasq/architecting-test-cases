@@ -1,5 +1,7 @@
 describe('Search properties for sale', () => {
     
+    const hasValue = (value) => ($element) => $element.val(value);
+
     [
         {
             suburb: 'york',
@@ -12,95 +14,81 @@ describe('Search properties for sale', () => {
             time:   '3',
             sort:   '6'
         },
-        // {
-        //      suburb: 'waterloo',
-        //      radius: '10.0',
-        //      type:   'flats',
-        //      minprice: '180000',
-        //      maxprice: '400000',
-        //      minroom: '1',
-        //      maxroom: '4',
-        //      time:   '7',
-        //      sort:   '6'
-        //  }
+        {
+             suburb: 'waterloo',
+             radius: '10.0',
+             type:   'flats',
+             minprice: '180000',
+             maxprice: '400000',
+             minroom: '1',
+             maxroom: '4',
+             time:   '7',
+             sort:   '6'
+         }
     ] 
     .forEach(({ suburb, radius, type, time, sort, minprice, maxprice, minroom, maxroom}) => {
        
         it('Should search properties for sale', () => {
             cy.visit('https://www.rightmove.co.uk/')
 
-                .get('#searchLocation') //.get('input[name=searchLocation]')
-                .should('be.visible') // to check if element is present
-                .type(suburb, {force:true})
-                    // forcing to type because input field it's covered by another element
-                    // Bug with Cypress 3. More information can be found here https://github.com/cypress-io/cypress/issues/2037
-                .get('li.typeAheadLocation')
-                .should('have.length', 10)
-                .first().click({force:true}) // selecting first from dropdown
-                .get('#buy').click({force:true});
+              .get('#searchLocation') //.get('input[name=searchLocation]')
+              .should('be.visible') // to check if element is present
+              .type(suburb, {force:true})
+                 // forcing to type because input field it's covered by another element
+                 // Bug with Cypress 3. More information can be found here https://github.com/cypress-io/cypress/issues/2037
+              .get('li.typeAheadLocation')
+              .should('have.length', 10) // checking length of object
+              .first().click({force:true}) // selecting first from dropdown
+              .get('#buy').click({force:true});
         })
 
         it('Should filter by Search Radius', () => {
             cy.get('#radius')
-                .then( function ($searchRadius){
-                    $searchRadius.val(radius)
-                    })
+              .then(hasValue(radius))
               .get('#radius option')
-              .should('have.length', 11)
+              .should('have.length', 11) // checking length of object
         })
 
         it('Should filter by Property Type',() => {
             cy.get('#displayPropertyType')
-                .then( function ($propertyType){
-                    $propertyType.val(type)
-                    })
+              .then(hasValue(type))
               .get('#displayPropertyType option')
-              .should('have.length', 7)
+              .should('have.length', 7) // checking length of object
         })
 
         it('Should filter by Added to site',() => {
             cy.get('#maxDaysSinceAdded')
-              .then( function ($addedToSite){
-                    $addedToSite.val(time) 
-                    })
+              .then(hasValue(time))
               .get('#maxDaysSinceAdded option')
-              .should('have.length', 5)
+              .should('have.length', 5) // checking length of object
         })
 
         it('Should filter by Price-Min',() => {
             cy.get('#minPrice')
-              .then( function ($minPrice){
-                    $minPrice.val(minprice) 
-                    })
+              .then(hasValue(minprice))
               .get('#minPrice option')
-              .should('have.length', 57)
+              .should('have.length', 57) // checking length of object
         })
 
         it('Should filter by Price-Max',() => {
             cy.get('#maxPrice')
-              .then( function ($maxPrice){
-                    $maxPrice.val(maxprice) 
-                    })
+              .then(hasValue(maxprice))
               .get('#maxPrice option')
-              .should('have.length', 57)
+              .should('have.length', 57) // checking length of object
         })
 
         it('Should filter by Min No. of bedrooms',() => {
             cy.get('#minBedrooms')
-              .then( function ($maxRoom){
-                    $maxRoom.val(minroom) 
-                    })
+              .then(hasValue(minroom))
               .get('#minBedrooms option')
-              .should('have.length', 7)
+              .should('have.length', 7) // checking length of object
         })
         
         it('Should filter by Max No. of bedrooms',() => {
             cy.get('#maxBedrooms')
-              .then( function ($maxRoom){
-                    $maxRoom.val(maxroom) 
-                    })
+              .then(hasValue(maxroom))
               .get('#maxBedrooms option')
-              .should('have.length', 7)
+              .should('have.length', 7) // checking length of object
         })
 
         it('Should submit the filter', () => {
@@ -111,11 +99,9 @@ describe('Search properties for sale', () => {
 
         it('Should sort by lowest price first', () => {
                 cy.get('[data-test=sort-type]')
-                  .then( function ($sortBy){
-                        $sortBy.val(sort)
-                        })
+                  .then(hasValue(sort))
                   .get('[data-test=sort-type] option')
-                  .should('have.length', 4)
+                  .should('have.length', 4) // checking length of object
         })
 
         it('Should click on first non featured property', () => {
