@@ -20,7 +20,10 @@ As a user, I want to search for a sale property, So that I can view details.
 ## Getting started 
 
 - Clone repository into local
+- Run ```yarn cypress run``` to run tests in headless mode
+- Run ```yarn cypress open``` to open project and see test runs in Cypress
 
+If you have any issues, delete node module and 
 - Run ```yarn``` in root to  install node pakages
 - Run ```yarn add cypress``` to install [Cypress](https://docs.cypress.io/guides/getting-started/installing-cypress.html)
 - Run ```yarn cypress open``` to open project
